@@ -1,0 +1,194 @@
+.about-page { padding-top: 80px; overflow-x: hidden; }
+
+/* Hero */
+.about-hero {
+  min-height: 80vh;
+  display: flex;
+  align-items: center;
+  position: relative;
+  padding: 80px 0;
+  background: var(--cream);
+}
+.about-hero__bg { position: absolute; inset: 0; pointer-events: none; overflow: hidden; }
+.about-hero__blob {
+  position: absolute;
+  width: 400px; height: 400px;
+  background: radial-gradient(circle, var(--sage) 0%, transparent 70%);
+  opacity: 0.4;
+  top: -80px; right: -80px;
+  animation: float 6s ease-in-out infinite;
+}
+.about-hero__blob--2 {
+  width: 300px; height: 300px;
+  background: radial-gradient(circle, var(--mustard) 0%, transparent 70%);
+  opacity: 0.25;
+  bottom: 0; left: 0;
+  animation-direction: reverse;
+}
+
+.about-hero__inner {
+  position: relative; z-index: 1;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 64px;
+  align-items: center;
+}
+.about-hero__content { display: flex; flex-direction: column; gap: 20px; }
+.about-hero__title {
+  font-size: clamp(2.2rem, 4.5vw, 3.4rem);
+  font-weight: 800;
+  color: var(--text-dark);
+  line-height: 1.15;
+}
+.about-hero__title span { color: var(--coral); }
+.about-hero__text {
+  font-size: 0.98rem;
+  color: var(--text-mid);
+  line-height: 1.8;
+  max-width: 480px;
+}
+
+.about-hero__visual {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  height: 320px;
+}
+.about-hero__big-emoji { font-size: 6rem; z-index: 2; }
+.about-hero__orbit {
+  position: absolute;
+  width: 280px; height: 280px;
+  border-radius: 50%;
+  border: 2px dashed var(--peach);
+  animation: spin-slow 12s linear infinite;
+}
+.about-hero__orbit-dot {
+  position: absolute;
+  font-size: 1.8rem;
+  transform: rotate(var(--angle)) translateX(140px) rotate(calc(-1 * var(--angle)));
+  transform-origin: 0 0;
+  left: 50%; top: 50%;
+}
+
+/* Mission */
+.about-mission { padding: 64px 0; background: var(--text-dark); }
+.about-mission__card {
+  max-width: 720px;
+  margin: 0 auto;
+  text-align: center;
+  position: relative;
+  padding: 0 20px;
+}
+.about-mission__quote {
+  font-family: 'Baloo 2', cursive;
+  font-size: 6rem;
+  color: var(--mustard);
+  line-height: 0.5;
+  margin-bottom: 20px;
+  opacity: 0.7;
+}
+.about-mission__text {
+  font-size: clamp(1.1rem, 2.5vw, 1.5rem);
+  color: var(--peach);
+  line-height: 1.75;
+  font-style: italic;
+  margin-bottom: 20px;
+}
+.about-mission__author {
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--text-light);
+}
+
+/* Values */
+.about-values { padding: 80px 0; }
+.about-values__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 24px;
+}
+.about-value-card {
+  background: var(--white);
+  border-radius: var(--radius-md);
+  padding: 32px 24px;
+  box-shadow: var(--shadow-soft);
+  transition: all 0.25s;
+}
+.about-value-card:hover { transform: translateY(-5px); box-shadow: var(--shadow-card); }
+.about-value-card__icon { font-size: 2.5rem; margin-bottom: 14px; display: block; }
+.about-value-card h3 {
+  font-family: 'Baloo 2', cursive;
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--text-dark);
+  margin-bottom: 8px;
+}
+.about-value-card p { font-size: 0.88rem; color: var(--text-light); line-height: 1.7; }
+
+/* Stats */
+.about-stats {
+  background: linear-gradient(135deg, var(--mint) 0%, var(--sage) 100%);
+  padding: 60px 0;
+}
+.about-stats__grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 24px;
+  text-align: center;
+}
+.about-stat { display: flex; flex-direction: column; align-items: center; gap: 6px; }
+.about-stat__emoji { font-size: 2rem; }
+.about-stat__val {
+  font-family: 'Baloo 2', cursive;
+  font-size: 2rem;
+  font-weight: 800;
+  color: var(--text-dark);
+}
+.about-stat__label { font-size: 0.85rem; font-weight: 700; color: var(--text-mid); }
+
+/* Team */
+.about-team { padding: 80px 0; }
+.about-team__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 24px;
+  justify-items: center;
+}
+.about-team-card {
+  background: var(--white);
+  border-radius: var(--radius-md);
+  padding: 32px 24px;
+  text-align: center;
+  box-shadow: var(--shadow-soft);
+  transition: all 0.25s;
+  width: 100%;
+  max-width: 260px;
+}
+.about-team-card:hover { transform: translateY(-5px); box-shadow: var(--shadow-card); }
+.about-team-card__avatar {
+  font-size: 3.5rem;
+  width: 80px; height: 80px;
+  background: var(--cream);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 16px;
+}
+.about-team-card__name {
+  font-family: 'Baloo 2', cursive;
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--text-dark);
+}
+.about-team-card__role { font-size: 0.85rem; color: var(--text-light); margin-top: 4px; }
+
+@media (max-width: 768px) {
+  .about-hero__inner { grid-template-columns: 1fr; }
+  .about-hero__visual { display: none; }
+  .about-stats__grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 400px) {
+  .about-stats__grid { grid-template-columns: 1fr 1fr; }
+}
