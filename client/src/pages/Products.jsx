@@ -76,37 +76,23 @@ export default function Products({ navigate, addToCart }) {
             />
           </div>
 
-          <div className="products-filters">
-            <button
-              className={`products-filter-btn ${
-                activeCategory === 'all'
-                  ? 'products-filter-btn--active'
-                  : ''
-              }`}
-              onClick={() => setActiveCategory('all')}
-            >
-              All
-            </button>
+          <div className="products-dropdown">
+  <select
+    value={activeCategory}
+    onChange={(e) => setActiveCategory(e.target.value)}
+    className="products-dropdown__select"
+  >
+    <option value="all">All Categories</option>
 
-            {categories.map(c => (
-              <button
-                key={c.id}
-                className={`products-filter-btn ${
-                  activeCategory === c.id
-                    ? 'products-filter-btn--active'
-                    : ''
-                }`}
-                onClick={() => setActiveCategory(c.id)}
-                style={
-                  activeCategory === c.id
-                    ? { '--btn-color': c.color }
-                    : {}
-                }
-              >
-                {c.emoji} {c.name}
-              </button>
-            ))}
-          </div>
+    {categories.map((c) => (
+      <option key={c.id} value={c.id}>
+        {c.name}
+      </option>
+    ))}
+  </select>
+</div>
+
+
         </div>
 
         {/* Results */}
