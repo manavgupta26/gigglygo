@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { categories } from '../data/products';
 import ProductCard from '../components/ProductCard';
 import './Home.css';
@@ -45,7 +45,31 @@ const TESTIMONIALS = [
 
 export default function Home({ navigate }) {
   const heroRef = useRef(null);
+const [typedText, setTypedText] = useState('');
+const [phraseIdx, setPhraseIdx] = useState(0);
+const [charIdx, setCharIdx] = useState(0);
+const [deleting, setDeleting] = useState(false);
 
+const TYPING_PHRASES = ['Snuggly Swaddles', 'Soft Rompers', 'Dry Sheets', 'Baby Nests', 'Muslin Magic'];
+
+useEffect(() => {
+  const word = TYPING_PHRASES[phraseIdx];
+  const timeout = setTimeout(() => {
+    if (!deleting) {
+      setTypedText(word.slice(0, charIdx + 1));
+      setCharIdx(c => c + 1);
+      if (charIdx + 1 === word.length) { setDeleting(true); }
+    } else {
+      setTypedText(word.slice(0, charIdx - 1));
+      setCharIdx(c => c - 1);
+      if (charIdx - 1 === 0) {
+        setDeleting(false);
+        setPhraseIdx(p => (p + 1) % TYPING_PHRASES.length);
+      }
+    }
+  }, deleting ? 55 : charIdx + 1 === word.length ? 1600 : 85);
+  return () => clearTimeout(timeout);
+}, [typedText, deleting, phraseIdx, charIdx]);
   // Staggered fade-in on mount
   useEffect(() => {
     const els = heroRef.current?.querySelectorAll('.hero-animate');
@@ -74,10 +98,12 @@ export default function Home({ navigate }) {
               <span className="section-tag">✨ Made for Tiny Humans</span>
             </div>
             <h1 className="hero__title hero-animate">
-              Everything Your<br />
-              <span className="hero__title-highlight">Baby Needs</span><br />
-              to <span className="hero__title-accent">Thrive</span> 
-            </h1>
+  Wrap Your Baby<br />in Pure<br />
+  <span className="typing-line">
+    <span className="hero__title-highlight">{typedText}</span>
+    <span className="typing-cursor" />
+  </span>
+</h1>
             <p className="hero__subtitle hero-animate">
               Premium baby essentials — soft, safe, and full of joy. From snuggly swaddles to waterproof dry sheets, crafted with love for your little one.
             </p>
@@ -89,7 +115,7 @@ export default function Home({ navigate }) {
               <button className="btn-outline" onClick={() => navigate('about')}>Our Story</button>
             </div>
             <div className="hero__stats hero-animate">
-              {[['5000+', 'Happy Babies'], ['100%', 'Skin Safe'], ['7', 'Categories'], ['⭐ 4.9', 'Rating']].map(([val, label]) => (
+              {[['5000+', 'Happy Babies'], ['100%', 'Skin Safe'], ['7', 'Categories']].map(([val, label]) => (
                 <div key={label} className="hero__stat">
                   <span className="hero__stat-val">{val}</span>
                   <span className="hero__stat-label">{label}</span>
