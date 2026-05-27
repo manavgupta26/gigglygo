@@ -706,3 +706,128 @@
 .hero__chip-name { font-weight: 700; font-size: 0.8rem; color: var(--text-dark); }
 
 
+/* =========================
+   HERO MOBILE FIX
+========================= */
+
+@media (max-width: 768px) {
+
+  .hero {
+    min-height: auto;
+    padding: 110px 0 50px;
+  }
+
+  .hero__inner {
+    grid-template-columns: 1fr;
+    gap: 40px;
+    text-align: center;
+  }
+
+  .hero__content {
+    align-items: center;
+  }
+
+  .hero__title {
+    font-size: clamp(2rem, 9vw, 3rem);
+    line-height: 1.15;
+  }
+
+  .hero__subtitle {
+    max-width: 100%;
+    font-size: 0.95rem;
+    line-height: 1.7;
+  }
+
+  .hero__actions {
+    justify-content: center;
+    width: 100%;
+  }
+
+  .hero__stats {
+    justify-content: center;
+    gap: 18px;
+  }
+
+  .hero__visual {
+    width: 100%;
+  }
+
+  .hero__visual-card--main {
+    width: 180px;
+    height: 180px;
+  }
+
+  .hero__visual-card--main img {
+    width: 95px !important;
+  }
+
+  .hero__floating-chip {
+    font-size: 0.72rem;
+    padding: 6px 12px;
+  }
+
+  .hero__floating-chip:nth-child(1) {
+    top: -8%;
+    left: 0%;
+  }
+
+  .hero__floating-chip:nth-child(2) {
+    top: 5%;
+    right: 0%;
+  }
+
+  .hero__floating-chip:nth-child(3) {
+    bottom: 10%;
+    right: 0%;
+  }
+
+  .hero__floating-chip:nth-child(4) {
+    bottom: -5%;
+    left: 5%;
+  }
+}
+
+
+/* Extra small phones */
+
+@media (max-width: 480px) {
+
+  .hero {
+    padding: 100px 0 40px;
+  }
+
+  .hero__title {
+    font-size: 2rem;
+  }
+
+  .hero__subtitle {
+    font-size: 0.9rem;
+  }
+
+  .hero__actions {
+    flex-direction: column;
+  }
+
+  .hero__actions button {
+    width: 100%;
+  }
+
+  .hero__visual-card--main {
+    width: 160px;
+    height: 160px;
+  }
+
+  .hero__visual-card--main img {
+    width: 80px !important;
+  }
+
+  .hero__floating-chip {
+    font-size: 0.68rem;
+    padding: 5px 10px;
+  }
+
+  .hero__stats {
+    gap: 14px;
+  }
+
+}

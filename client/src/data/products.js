@@ -2,7 +2,6 @@ export const categories = [
   {
     id: 'dry-sheets',
     name: 'Baby Dry Sheets',
-    emoji: '🛏️',
     color: '#B8D1C1',
     tagline: 'Waterproof & Skin-Friendly',
     description: 'Keep your baby comfortable and dry all night long. Waterproof, washable, and gentle on delicate skin.',
@@ -19,7 +18,6 @@ export const categories = [
   {
     id: 'rompers',
     name: 'Muslin Rompers & Sets',
-    emoji: '👶',
     color: '#F59B90',
     tagline: 'Pure Cotton Comfort',
     description: 'Breathable pure cotton muslin rompers and sets for happy, comfortable newborns.',
@@ -36,7 +34,6 @@ export const categories = [
   {
     id: 'swaddles',
     name: 'Muslin Swaddles',
-    emoji: '🤱',
     color: '#F2B50C',
     tagline: 'Wrap Them in Love',
     description: 'Multi-use cotton muslin swaddles — for swaddling, nursing, and everything in between.',
@@ -52,7 +49,6 @@ export const categories = [
   {
     id: 'hooded-wraps',
     name: 'Hooded Swaddle Wraps',
-    emoji: '🧸',
     color: '#F39A16',
     tagline: 'Snug & Warm',
     description: 'Warm, cozy hooded swaddle wraps with soft knitted fabric for the coldest nights.',
@@ -68,7 +64,6 @@ export const categories = [
   {
     id: 'blankets',
     name: 'Baby Blankets',
-    emoji: '🌙',
     color: '#A7C2B1',
     tagline: 'Cozy Dreams',
     description: 'Soft polar fleece and printed blankets for warm, cozy sleep every single night.',
@@ -84,7 +79,6 @@ export const categories = [
   {
     id: 'mats',
     name: 'Baby Mats',
-    emoji: '🏡',
     color: '#E7C9BC',
     tagline: 'Clean & Comfortable',
     description: 'Padded, waterproof and foldable baby mats for changing, play, and tummy time.',
@@ -100,7 +94,6 @@ export const categories = [
   {
     id: 'nest-bed',
     name: 'Baby Nest Bed',
-    emoji: '🪺',
     color: '#B8D1C1',
     tagline: 'Safe Sleep Anywhere',
     description: 'Portable, cushioned baby nest beds for safe and comfortable sleep wherever you are.',

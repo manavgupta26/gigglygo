@@ -82,7 +82,7 @@
   transition: all 0.2s ease;
 }
 .navbar__link:hover {
-  background: var(--peach);
+  background: var(--sage);
   color: var(--text-dark);
 }
 .navbar__link--active {
