@@ -1,4 +1,4 @@
 const API_URL =
-  "http://localhost:8000/api";
+  "https://gigglygo.onrender.com/api";
 
 export default API_URL;
