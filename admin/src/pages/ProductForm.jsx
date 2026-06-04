@@ -7,18 +7,14 @@ import {
 import { uploadImage } from "../api/uploadApi";
 import { getCategories, createCategory } from "../api/categoryApi";
 import "./AddProduct.css";
-import {
-  useParams,
-  useNavigate,
-} from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
+
 export default function ProductForm() {
   const { id } = useParams();
+  const navigate = useNavigate();
+  const isEdit = !!id;
 
-const navigate = useNavigate();
-
-const isEdit = !!id;
   const [categories, setCategories] = useState([]);
-
   const [form, setForm] = useState({
     category: "",
     name: "",
@@ -39,7 +35,6 @@ const isEdit = !!id;
   ]);
 
   const [showNewCategory, setShowNewCategory] = useState(false);
-
   const [newCategory, setNewCategory] = useState({
     name: "",
     slug: "",
@@ -53,8 +48,12 @@ const isEdit = !!id;
 
   const removeColor = (i) => setColors(colors.filter((_, idx) => idx !== i));
 
+  // CHANGE 1: reset color.stock to 0 when the first size is added
   const addSize = (colorIndex) => {
     const updated = [...colors];
+    if (updated[colorIndex].sizes.length === 0) {
+      updated[colorIndex].stock = 0;
+    }
     updated[colorIndex].sizes.push({ size: "", stock: 0 });
     setColors(updated);
   };
@@ -74,49 +73,35 @@ const isEdit = !!id;
     setColors(updated);
   };
 
-useEffect(() => {
-  loadCategories();
-
-  if (isEdit) {
-    loadProduct();
-  }
-}, []);
+  useEffect(() => {
+    loadCategories();
+    if (isEdit) loadProduct();
+  }, []);
 
   const loadCategories = async () => {
     const data = await getCategories();
     setCategories(data.categories);
   };
+
   const loadProduct = async () => {
-  const data = await getProductById(id);
-
-  const product = data.product;
-
-  setForm({
-    category: product.category._id,
-    name: product.name || "",
-    slug: product.slug || "",
-    shortDescription:
-      product.shortDescription || "",
-    description:
-      product.description || "",
-    price:
-      product.price || "",
-    originalPrice:
-      product.originalPrice || "",
-    discount:
-      product.discount || "",
-    tag:
-      product.tag || "",
-    featured:
-      product.featured || false,
-    bestSeller:
-      product.bestSeller || false,
-    isActive:
-      product.isActive ?? true,
-  });
-
-  setColors(product.colors || []);
-};
+    const data = await getProductById(id);
+    const product = data.product;
+    setForm({
+      category: product.category._id,
+      name: product.name || "",
+      slug: product.slug || "",
+      shortDescription: product.shortDescription || "",
+      description: product.description || "",
+      price: product.price || "",
+      originalPrice: product.originalPrice || "",
+      discount: product.discount || "",
+      tag: product.tag || "",
+      featured: product.featured || false,
+      bestSeller: product.bestSeller || false,
+      isActive: product.isActive ?? true,
+    });
+    setColors(product.colors || []);
+  };
 
   const handleCreateCategory = async () => {
     try {
@@ -131,50 +116,37 @@ useEffect(() => {
     }
   };
 
-const handleSubmit = async (e) => {
-  e.preventDefault();
+  // CHANGE 2: clean colors payload before submit
+  const handleSubmit = async (e) => {
+    e.preventDefault();
 
-  const payload = {
-    ...form,
+    const cleanedColors = colors.map((color) => ({
+      ...color,
+      stock: color.sizes.length > 0 ? 0 : color.stock,
+    }));
 
-    price: Number(form.price),
+    const payload = {
+      ...form,
+      price: Number(form.price),
+      originalPrice: Number(form.originalPrice),
+      discount: Number(form.discount),
+      colors: cleanedColors,
+    };
 
-    originalPrice: Number(
-      form.originalPrice
-    ),
+    if (isEdit) {
+      await updateProduct(id, payload);
+      alert("Product Updated");
+    } else {
+      await createProduct(payload);
+      alert("Product Created");
+    }
 
-    discount: Number(
-      form.discount
-    ),
-
-    colors,
+    navigate("/products");
   };
-
-  if (isEdit) {
-    await updateProduct(
-      id,
-      payload
-    );
-
-    alert("Product Updated");
-  } else {
-    await createProduct(
-      payload
-    );
-
-    alert("Product Created");
-  }
-
-  navigate("/products");
-};
 
   return (
     <div className="ap-page">
-      <div className="ap-page-title">
-  {isEdit
-    ? "Edit Product"
-    : "Add Product"}
-</div>
+      <div className="ap-page-title">{isEdit ? "Edit Product" : "Add Product"}</div>
 
       <form onSubmit={handleSubmit}>
 
@@ -341,6 +313,7 @@ const handleSubmit = async (e) => {
                 )}
               </div>
 
+              {/* CHANGE 3: conditionally show stock input or total stock display */}
               <div className="ap-row-2">
                 <div className="ap-field">
                   <label>Color Name</label>
@@ -351,15 +324,40 @@ const handleSubmit = async (e) => {
                       setColors(updated);
                     }} />
                 </div>
-                <div className="ap-field">
-                  <label>Stock</label>
-                  <input className="ap-input" type="number" placeholder="0" value={color.stock}
-                    onChange={(e) => {
-                      const updated = [...colors];
-                      updated[colorIndex].stock = Number(e.target.value);
-                      setColors(updated);
-                    }} />
-                </div>
+
+                {color.sizes.length === 0 ? (
+                  // Requirement 1: no sizes → show editable stock input
+                  <div className="ap-field">
+                    <label>Stock</label>
+                    <input
+                      className="ap-input"
+                      type="number"
+                      placeholder="0"
+                      value={color.stock}
+                      onChange={(e) => {
+                        const updated = [...colors];
+                        updated[colorIndex].stock = Number(e.target.value);
+                        setColors(updated);
+                      }}
+                    />
+                  </div>
+                ) : (
+                  // Requirement 2 & 5: sizes exist → hide input, show computed total
+                  <div className="ap-field">
+                    <label>Total Stock</label>
+                    <div
+                      className="ap-input"
+                      style={{
+                        background: "var(--bg-secondary, #f5f5f5)",
+                        cursor: "default",
+                        display: "flex",
+                        alignItems: "center",
+                      }}
+                    >
+                      {color.sizes.reduce((sum, s) => sum + (Number(s.stock) || 0), 0)}
+                    </div>
+                  </div>
+                )}
               </div>
 
               <div className="ap-field">
@@ -410,8 +408,11 @@ const handleSubmit = async (e) => {
           </button>
         </div>
 
+        {/* CHANGE 4: dynamic submit label */}
         <div className="ap-form-footer">
-          <button type="submit" className="ap-btn-primary">Create Product</button>
+          <button type="submit" className="ap-btn-primary">
+            {isEdit ? "Update Product" : "Create Product"}
+          </button>
         </div>
 
       </form>
