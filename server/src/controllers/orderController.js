@@ -112,6 +112,7 @@ const createOrder = async (req, res) => {
       order,
     });
   } catch (error) {
+    console.error("ORDER ERROR:", error);
     res.status(500).json({
       success: false,
       message: error.message,

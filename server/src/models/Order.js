@@ -95,21 +95,28 @@ const orderSchema = new mongoose.Schema(
 );
 
 orderSchema.pre("save", async function (next) {
-  if (!this.isNew) return next();
+  try {
+    console.log("Generating order number");
 
-  const counter =
-    await Counter.findOneAndUpdate(
-      { name: "orders" },
-      { $inc: { sequence: 1 } },
-      {
-        new: true,
-        upsert: true,
-      }
-    );
+    const counter =
+      await Counter.findOneAndUpdate(
+        { name: "orders" },
+        { $inc: { sequence: 1 } },
+        {
+          new: true,
+          upsert: true,
+        }
+      );
 
-  this.orderNumber = `GG${counter.sequence}`;
+    console.log("Counter:", counter);
 
-  next();
+    this.orderNumber = `GG${counter.sequence}`;
+
+    next();
+  } catch (error) {
+    console.error("PRE SAVE ERROR:", error);
+    next(error);
+  }
 });
 
 module.exports = mongoose.model("Order", orderSchema);
