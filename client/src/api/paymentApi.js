@@ -1,7 +1,7 @@
 import axios from "axios";
+import API_URL from "../config/api";
 
-const API =
-  "http://localhost:8000/api/payment";
+const API = `${API_URL}/payment`;
 
 export const createRazorpayOrder =
   async (amount) => {

@@ -3,11 +3,10 @@ import axios from "axios";
 const token =
   localStorage.getItem("token");
 
-const orderAPI =
-  "http://localhost:8000/api/orders";
+import API_URL from "../config/api";
 
-const userAPI =
-  "http://localhost:8000/api/users";
+const orderAPI = `${API_URL}/orders`;
+const userAPI = `${API_URL}/users`;
 
 export const getMyOrders =
   async () => {

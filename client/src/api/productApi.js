@@ -1,4 +1,4 @@
-import API_URL from "../../../server/src/config/api";
+import API_URL from "../config/api";
 export const getProducts = async (
   query = ""
 ) => {
