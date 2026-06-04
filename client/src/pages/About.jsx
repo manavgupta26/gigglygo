@@ -8,6 +8,8 @@ const VALUES = [
   { icon: '🎨', title: 'Joyful Designs', desc: 'We believe baby products should be as fun and colourful as childhood itself. Every print tells a story.' },
 ];
 
+
+
 const TEAM = [
   { name: 'Richa Sharma', role: 'Founder & Designer', emoji: '👩‍💼' },
   { name: 'Amit Gupta', role: 'Operations', emoji: '👨‍💻' },
