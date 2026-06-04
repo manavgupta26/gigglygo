@@ -108,7 +108,7 @@ orderSchema.pre("save", async function () {
         }
       );
 
-    this.orderNumber = `GG${counter.sequence}`;
+    this.orderNumber = `GG${1000+ counter.sequence}`;
   } catch (error) {
     console.error("PRE SAVE ERROR:", error);
     throw error;
