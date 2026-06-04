@@ -1,7 +1,9 @@
 import React from 'react';
 import './Cart.css';
+import { useNavigate } from "react-router-dom";
 
-export default function Cart({ cartItems, setCartItems, navigate }) {
+export default function Cart({ cartItems, setCartItems }) {
+  const navigate = useNavigate();
   const total = cartItems.reduce((s, i) => s + i.price * i.qty, 0);
   const count = cartItems.reduce((s, i) => s + i.qty, 0);
 
@@ -74,7 +76,7 @@ export default function Cart({ cartItems, setCartItems, navigate }) {
                 <span>Total</span>
                 <span>₹{total >= 999 ? total : total + 99}</span>
               </div>
-              <button className="btn-primary cart-summary__checkout" onClick={() => navigate('contact')}>
+              <button className="btn-primary cart-summary__checkout" onClick={() => navigate('/checkout')}>
                 Proceed to Checkout 🚀
               </button>
               <button className="btn-outline cart-summary__continue" onClick={() => navigate('products')}>

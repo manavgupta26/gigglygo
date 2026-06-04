@@ -1,9 +1,12 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { categories } from '../data/products';
 import ProductCard from '../components/ProductCard';
 import './Home.css';
 import { Leaf, WashingMachine, Sparkles, PackageCheck } from 'lucide-react';
+import { useNavigate } from "react-router-dom";
 import { Shirt, Star, Gift, Truck, Heart } from 'lucide-react';
+import { getProducts }
+from "../api/productApi";
+import { getCategories } from "../api/categoryApi";
 import logo from '../assets/logo.svg'; // Ensure logo is included in the build
 const MARQUEE_ITEMS = ['Waterproof Dry Sheets', 'Muslin Rompers', 'Cotton Swaddles', 'Baby Blankets', 'Hooded Wraps', 'Baby Nests', 'Changing Mats', 'Pure Cotton Sets'];
 const CTA_ICONS = [
@@ -43,7 +46,9 @@ const TESTIMONIALS = [
   { name: 'Anita K.', city: 'Delhi', text: 'Ordered the romper set and the baby nest. Quality is amazing for the price. Highly recommend!', stars: 5, emoji: '💛' },
 ];
 
-export default function Home({ navigate }) {
+export default function Home() {
+   const navigate = useNavigate();
+  const [categories, setCategories] = useState([]);
   const heroRef = useRef(null);
 const [typedText, setTypedText] = useState('');
 const [phraseIdx, setPhraseIdx] = useState(0);
@@ -79,8 +84,39 @@ useEffect(() => {
     });
   }, []);
 
+  useEffect(() => {
+  const fetchProducts = async () => {
+    const data =
+      await getProducts(
+        "?bestSeller=true"
+      );
+
+    setBestsellers(data.products || []);
+  };
+
+  fetchProducts();
+}, []);
+
+useEffect(() => {
+  const fetchCategories = async () => {
+    try {
+      const data = await getCategories();
+
+      setCategories(data.categories || []);
+    } catch (error) {
+      console.error(
+        "Error fetching categories:",
+        error
+      );
+    }
+  };
+
+  fetchCategories();
+}, []);
+
   // Bestseller products (first from each category)
-  const bestsellers = categories.slice(0, 4).map(c => ({ ...c.products[0], category: c }));
+const [bestsellers, setBestsellers] =
+  useState([]);
 
   return (
     <div className="home">
@@ -108,11 +144,11 @@ useEffect(() => {
               Premium baby essentials — soft, safe, and full of joy. From snuggly swaddles to waterproof dry sheets, crafted with love for your little one.
             </p>
             <div className="hero__actions hero-animate">
-              <button className="btn-primary" onClick={() => navigate('products')}>
+              <button className="btn-primary" onClick={() => navigate('/products')}>
                 Shop Collection
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
               </button>
-              <button className="btn-outline" onClick={() => navigate('about')}>Our Story</button>
+              <button className="btn-outline" onClick={() => navigate('/about')}>Our Story</button>
             </div>
             <div className="hero__stats hero-animate">
               {[['5000+', 'Happy Babies'], ['100%', 'Skin Safe'], ['7', 'Categories']].map(([val, label]) => (
@@ -180,23 +216,23 @@ useEffect(() => {
       </button>
 
       <div className="categories-grid">
-        {categories.map((cat, i) => (
+        {categories.map((category,i) => (
           <button
-            key={cat.id}
+            key={category._id}
             className="category-card"
             style={{
-              '--cat-color': cat.color,
-              animationDelay: `${i * 0.07}s`
-            }}
+  '--cat-color': '#F2B50C',
+  animationDelay: `${i * 0.07}s`
+}}
             onClick={() =>
-              navigate('products', { activeCategory: cat.id })
-            }
+  navigate(`/products?category=${category.slug}`)
+}
           >
             <div className="category-card__body">
-              <h3 className="category-card__name">{cat.name}</h3>
-              <p className="category-card__tagline">{cat.tagline}</p>
+              <h3 className="category-card__name">{category.name}</h3>
+              <p className="category-card__tagline">{category.description}</p>
               <span className="category-card__count">
-                {cat.products.length} products
+                 Products Available
               </span>
             </div>
 
@@ -240,11 +276,11 @@ useEffect(() => {
           </div>
           <div className="products-grid">
             {bestsellers.map(p => (
-              <ProductCard key={p.id} product={p} category={p.category} navigate={navigate} />
+              <ProductCard key={p._id} product={p} category={p.category} />
             ))}
           </div>
           <div className="section-cta">
-            <button className="btn-primary" onClick={() => navigate('products')}>
+            <button className="btn-primary" onClick={() => navigate('/products')}>
               View All Products
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
             </button>
@@ -306,7 +342,7 @@ useEffect(() => {
               <span className="section-tag">Custom Orders Welcome!</span>
               <h2 className="cta-banner__title">Need Something Special? </h2>
               <p className="cta-banner__desc">Custom prints, bulk orders, or personalized designs — we're here to create the perfect baby essentials just for you.</p>
-              <button className="btn-primary" onClick={() => navigate('contact')}>
+              <button className="btn-primary" onClick={() => navigate('/contact')}>
                 Get in Touch
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
               </button>

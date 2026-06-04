@@ -1,0 +1,334 @@
+/* ── Page ── */
+.cat-page {
+  max-width: 680px;
+  margin: 0 auto;
+  padding: 32px 24px 64px;
+  font-family: "DM Sans", "Segoe UI", sans-serif;
+  color: #0f0f1a;
+}
+
+/* ── Header ── */
+.cat-header {
+  margin-bottom: 24px;
+}
+
+.cat-title {
+  font-size: 26px;
+  font-weight: 700;
+  letter-spacing: -0.4px;
+  margin: 0 0 4px;
+  color: #0f0f1a;
+}
+
+.cat-subtitle {
+  font-size: 13px;
+  color: #7a7a9a;
+  margin: 0;
+}
+
+/* ── Create bar ── */
+.cat-create-bar {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.cat-create-bar .cat-input {
+  flex: 1;
+}
+
+/* ── Input ── */
+.cat-input {
+  padding: 9px 13px;
+  border: 1.5px solid #e2e2ee;
+  border-radius: 8px;
+  font-size: 14px;
+  outline: none;
+  background: #fff;
+  color: #0f0f1a;
+  width: 100%;
+  box-sizing: border-box;
+  transition: border-color 0.15s;
+  font-family: inherit;
+}
+
+.cat-input:focus {
+  border-color: #4f46e5;
+}
+
+/* ── Buttons ── */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 9px 16px;
+  border-radius: 8px;
+  font-size: 13.5px;
+  font-weight: 500;
+  cursor: pointer;
+  border: 1.5px solid transparent;
+  transition: background 0.15s, opacity 0.15s, border-color 0.15s;
+  white-space: nowrap;
+  font-family: inherit;
+}
+
+.btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.btn-primary {
+  background: #0f0f1a;
+  color: #fff;
+  border-color: #0f0f1a;
+}
+
+.btn-primary:hover:not(:disabled) {
+  background: #2a2a40;
+}
+
+.btn-secondary {
+  background: #f4f4f8;
+  color: #3a3a5c;
+  border-color: #e2e2ee;
+}
+
+.btn-secondary:hover:not(:disabled) {
+  background: #ebebf5;
+}
+
+.btn-danger {
+  background: #fff;
+  color: #dc2626;
+  border-color: #fecaca;
+}
+
+.btn-danger:hover:not(:disabled) {
+  background: #fef2f2;
+  border-color: #fca5a5;
+}
+
+.btn-ghost {
+  background: transparent;
+  color: #5a5a7a;
+  border-color: #e2e2ee;
+}
+
+.btn-ghost:hover {
+  background: #f5f5fb;
+}
+
+/* Spinner inside button */
+.btn-spinner {
+  width: 13px;
+  height: 13px;
+  border: 2px solid rgba(255,255,255,0.35);
+  border-top-color: #fff;
+  border-radius: 50%;
+  animation: spin 0.6s linear infinite;
+  flex-shrink: 0;
+}
+
+.btn-spinner--red {
+  border-color: rgba(220,38,38,0.25);
+  border-top-color: #dc2626;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* ── List ── */
+.cat-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+/* ── Empty ── */
+.cat-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  padding: 48px 24px;
+  border: 1.5px dashed #e2e2ee;
+  border-radius: 12px;
+  color: #9191b0;
+  font-size: 14px;
+}
+
+.cat-empty svg {
+  opacity: 0.4;
+}
+
+.cat-empty p {
+  margin: 0;
+}
+
+/* ── Row ── */
+.cat-row {
+  background: #fff;
+  border: 1.5px solid #e6e6f0;
+  border-radius: 10px;
+  padding: 12px 14px;
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+
+.cat-row:hover {
+  border-color: #d0d0e0;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+
+.cat-row--editing {
+  border-color: #4f46e5;
+  box-shadow: 0 0 0 3px rgba(79,70,229,0.08);
+}
+
+/* view mode inner */
+.cat-row > :not(.cat-edit-form) {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+/* ── Category info ── */
+.cat-info {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
+}
+
+.cat-name {
+  font-size: 14px;
+  font-weight: 600;
+  color: #0f0f1a;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* ── Thumbnail ── */
+.cat-thumb {
+  width: 40px;
+  height: 40px;
+  object-fit: cover;
+  border-radius: 8px;
+  flex-shrink: 0;
+  border: 1.5px solid #e6e6f0;
+}
+
+.cat-thumb-placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #f0f0f8;
+  color: #5a5a7a;
+  font-size: 15px;
+  font-weight: 700;
+  border: 1.5px solid #e6e6f0;
+}
+
+/* ── Actions ── */
+.cat-actions {
+  display: flex;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+/* ── Edit form ── */
+.cat-edit-form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.cat-edit-image-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+/* Upload label */
+.upload-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 14px;
+  border-radius: 8px;
+  border: 1.5px solid #e2e2ee;
+  font-size: 13px;
+  font-weight: 500;
+  color: #3a3a5c;
+  cursor: pointer;
+  background: #fafafa;
+  transition: background 0.15s, border-color 0.15s;
+  white-space: nowrap;
+  font-family: inherit;
+}
+
+.upload-label:hover {
+  background: #f0f0f8;
+  border-color: #c7c7e2;
+}
+
+/* Edit thumbnail */
+.edit-thumb-wrap {
+  position: relative;
+  display: inline-flex;
+}
+
+.edit-thumb {
+  width: 48px;
+  height: 48px;
+  object-fit: cover;
+  border-radius: 8px;
+  border: 1.5px solid #e6e6f0;
+}
+
+.btn-remove-img {
+  position: absolute;
+  top: -7px;
+  right: -7px;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: #dc2626;
+  color: #fff;
+  border: 2px solid #fff;
+  cursor: pointer;
+  font-size: 14px;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  transition: background 0.15s;
+}
+
+.btn-remove-img:hover {
+  background: #b91c1c;
+}
+
+.cat-edit-actions {
+  display: flex;
+  gap: 8px;
+}
+
+/* ── Responsive ── */
+@media (max-width: 480px) {
+  .cat-page {
+    padding: 20px 16px 48px;
+  }
+
+  .cat-actions {
+    gap: 6px;
+  }
+
+  .btn {
+    padding: 8px 12px;
+    font-size: 12.5px;
+  }
+}

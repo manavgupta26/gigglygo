@@ -1,31 +1,83 @@
-import React, { useState } from 'react';
-import { categories } from '../data/products';
-import ProductCard from '../components/ProductCard';
-import './Products.css';
+import { useEffect, useState } from "react";
+import { getProducts } from "../api/productApi";
+import { getCategories } from "../api/categoryApi";
+import ProductCard from "../components/ProductCard";
+import "./Products.css";
 
-export default function Products({ navigate, addToCart }) {
-  const [activeCategory, setActiveCategory] = useState('all');
-  const [search, setSearch] = useState('');
+export default function Products({ addToCart }) {
+  const [products, setProducts] = useState([]);
+  const [categories, setCategories] = useState([]);
+  const [loading, setLoading] = useState(true);
 
-  const filteredCategories = categories.filter(
-    c => activeCategory === 'all' || c.id === activeCategory
-  );
+  const [activeCategory, setActiveCategory] =
+    useState("all");
 
-  const filtered = filteredCategories
-    .map(c => ({
-      ...c,
-      products: c.products.filter(
-        p =>
-          p.name.toLowerCase().includes(search.toLowerCase()) ||
-          p.desc.toLowerCase().includes(search.toLowerCase())
-      )
-    }))
-    .filter(c => c.products.length > 0);
+  const [search, setSearch] =
+    useState("");
 
-  const totalProducts = categories.reduce(
-    (s, c) => s + c.products.length,
-    0
-  );
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const [
+          productsData,
+          categoriesData,
+        ] = await Promise.all([
+          getProducts(),
+          getCategories(),
+        ]);
+
+        setProducts(
+          productsData.products || []
+        );
+
+        setCategories(
+          categoriesData.categories || []
+        );
+      } catch (error) {
+        console.error(error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  const filteredProducts =
+    products.filter((product) => {
+      const matchesSearch =
+        product.name
+          ?.toLowerCase()
+          .includes(
+            search.toLowerCase()
+          );
+
+      const matchesCategory =
+        activeCategory === "all" ||
+        product.category?._id ===
+          activeCategory;
+
+      return (
+        matchesSearch &&
+        matchesCategory
+      );
+    });
+
+  const totalProducts =
+    products.length;
+
+  if (loading) {
+    return (
+      <h2
+        style={{
+          textAlign: "center",
+          padding: "50px",
+        }}
+      >
+        Loading...
+      </h2>
+    );
+  }
 
   return (
     <div className="products-page">
@@ -36,14 +88,17 @@ export default function Products({ navigate, addToCart }) {
         </div>
 
         <div className="container products-header__inner">
-          <span className="section-tag">All Products</span>
+          <span className="section-tag">
+            All Products
+          </span>
 
           <h1 className="products-header__title">
             Shop Baby Essentials
           </h1>
 
           <p className="products-header__sub">
-            {totalProducts} handpicked products across{' '}
+            {totalProducts} handpicked
+            products across{" "}
             {categories.length} categories
           </p>
         </div>
@@ -63,7 +118,11 @@ export default function Products({ navigate, addToCart }) {
               strokeLinecap="round"
               strokeLinejoin="round"
             >
-              <circle cx="11" cy="11" r="8" />
+              <circle
+                cx="11"
+                cy="11"
+                r="8"
+              />
               <path d="m21 21-4.35-4.35" />
             </svg>
 
@@ -71,108 +130,87 @@ export default function Products({ navigate, addToCart }) {
               type="text"
               placeholder="Search products..."
               value={search}
-              onChange={e => setSearch(e.target.value)}
+              onChange={(e) =>
+                setSearch(
+                  e.target.value
+                )
+              }
               className="products-search__input"
             />
           </div>
 
           <div className="products-dropdown">
-  <select
-    value={activeCategory}
-    onChange={(e) => setActiveCategory(e.target.value)}
-    className="products-dropdown__select"
-  >
-    <option value="all">All Categories</option>
+            <select
+              value={
+                activeCategory
+              }
+              onChange={(e) =>
+                setActiveCategory(
+                  e.target.value
+                )
+              }
+              className="products-dropdown__select"
+            >
+              <option value="all">
+                All Categories
+              </option>
 
-    {categories.map((c) => (
-      <option key={c.id} value={c.id}>
-        {c.name}
-      </option>
-    ))}
-  </select>
-</div>
-
-
+              {categories.map((c) => (
+                <option
+                  key={c._id}
+                  value={c._id}
+                >
+                  {c.name}
+                </option>
+              ))}
+            </select>
+          </div>
         </div>
 
         {/* Results */}
-        {filtered.length === 0 ? (
+        {filteredProducts.length ===
+        0 ? (
           <div className="products-empty">
             <span>🔍</span>
 
-            <h3>No products found</h3>
+            <h3>
+              No products found
+            </h3>
 
             <p>
-              Try a different search or browse all categories
+              Try a different
+              search or browse all
+              categories
             </p>
 
             <button
               className="btn-primary"
               onClick={() => {
-                setSearch('');
-                setActiveCategory('all');
+                setSearch("");
+                setActiveCategory(
+                  "all"
+                );
               }}
             >
               Clear Filters
             </button>
           </div>
-        ) : activeCategory === 'all' ? (
-          /* SHOW ALL PRODUCTS WITHOUT SECTION HEADERS */
-          <div className="products-grid">
-            {filtered.flatMap(cat =>
-              cat.products.map(p => (
-                <ProductCard
-                  key={p.id}
-                  product={p}
-                  category={cat}
-                  navigate={navigate}
-                  addToCart={addToCart}
-                />
-              ))
-            )}
-          </div>
         ) : (
-          /* SHOW SELECTED CATEGORY ONLY */
-          <div className="products-sections">
-            {filtered.map(cat => (
-              <div
-                key={cat.id}
-                className="products-section"
-              >
-                <div className="products-section__header">
-                  
-
-                  <div>
-                    <h2 className="products-section__title">
-                      {cat.name}
-                    </h2>
-
-                    <p className="products-section__sub">
-                      {cat.tagline} · {cat.products.length}{' '}
-                      products
-                    </p>
-                  </div>
-
-                  {cat.hasSizes && (
-                    <span className="products-section__sizes-badge">
-                      Sizes: S M L XL XXL
-                    </span>
-                  )}
-                </div>
-
-                <div className="products-grid">
-                  {cat.products.map(p => (
-                    <ProductCard
-                      key={p.id}
-                      product={p}
-                      category={cat}
-                      navigate={navigate}
-                      addToCart={addToCart}
-                    />
-                  ))}
-                </div>
-              </div>
-            ))}
+          <div className="products-grid">
+            {filteredProducts.map(
+              (product) => (
+                <ProductCard
+                  key={product._id}
+                  product={product}
+                  category={
+                    product.category
+                  }
+                  addToCart={
+                    addToCart
+                  }
+                />
+              )
+            )}
           </div>
         )}
       </div>

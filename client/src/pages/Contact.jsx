@@ -29,8 +29,8 @@ export default function Contact() {
 
           <div className="contact-details">
             {[
-              { icon: '📱', label: 'WhatsApp', value: '+91 98765 43210', sub: 'Quick replies on WhatsApp' },
-              { icon: '📧', label: 'Email', value: 'hello@gigglygo.in', sub: 'We reply within 24 hours' },
+              { icon: '📱', label: 'WhatsApp', value: '+91 79737 44126', sub: 'Quick replies on WhatsApp' },
+              { icon: '📧', label: 'Email', value: 'arshiyaagupta@gmail.com', sub: 'We reply within 24 hours' },
               { icon: '📍', label: 'Location', value: 'India', sub: 'Pan-India shipping' },
             ].map(d => (
               <div key={d.label} className="contact-detail-item">

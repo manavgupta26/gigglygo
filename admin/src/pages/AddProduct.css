@@ -1,0 +1,239 @@
+/* AddProduct.css */
+
+.ap-page {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 32px 24px;
+  font-family: 'Segoe UI', system-ui, sans-serif;
+  font-size: 14px;
+  color: #1a1a1a;
+  background-color: #f5f5f5;
+  min-height: 100vh;
+}
+
+.ap-page-title {
+  font-size: 22px;
+  font-weight: 600;
+  margin-bottom: 24px;
+  padding-bottom: 12px;
+  border-bottom: 2px solid #ddd;
+}
+
+/* Section cards */
+.ap-section {
+  background-color: #fff;
+  border: 1px solid #e0e0e0;
+  border-radius: 6px;
+  padding: 20px;
+  margin-bottom: 16px;
+}
+
+.ap-section-title {
+  font-size: 13px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: #555;
+  margin-bottom: 16px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid #eee;
+}
+
+/* Fields */
+.ap-field {
+  margin-bottom: 14px;
+}
+
+.ap-field label,
+.ap-label {
+  display: block;
+  font-weight: 500;
+  margin-bottom: 5px;
+  color: #333;
+}
+
+.ap-field input[type="text"],
+.ap-field input[type="number"],
+.ap-field input:not([type="checkbox"]):not([type="file"]),
+.ap-field textarea,
+.ap-field select,
+.ap-input,
+.ap-textarea,
+.ap-select {
+  width: 100%;
+  padding: 8px 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 14px;
+  box-sizing: border-box;
+  background-color: #fafafa;
+  font-family: inherit;
+}
+
+.ap-textarea {
+  resize: vertical;
+}
+
+/* 3-column pricing row */
+.ap-row-3 {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 14px;
+}
+
+/* 2-column row */
+.ap-row-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+/* Checkbox row */
+.ap-checkbox-row {
+  display: flex;
+  gap: 24px;
+  flex-wrap: wrap;
+}
+
+.ap-checkbox-label {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  cursor: pointer;
+  font-weight: 500;
+}
+
+/* New category inline box */
+.ap-new-category-box {
+  border: 1px solid #bbb;
+  border-radius: 5px;
+  padding: 16px;
+  margin-top: 10px;
+  background-color: #fafafa;
+}
+
+.ap-new-category-box-title {
+  font-weight: 600;
+  margin-bottom: 12px;
+}
+
+.ap-new-category-actions {
+  display: flex;
+  gap: 8px;
+}
+
+/* Color cards */
+.ap-color-card {
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  padding: 16px;
+  margin-bottom: 14px;
+  background-color: #fafafa;
+}
+
+.ap-color-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.ap-color-card-title {
+  font-weight: 600;
+  font-size: 14px;
+  color: #333;
+}
+
+/* Size rows */
+.ap-size-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr auto;
+  gap: 8px;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+/* Image thumbnails */
+.ap-images-wrap {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.ap-image-thumb {
+  width: 72px;
+  height: 72px;
+  object-fit: cover;
+  border-radius: 4px;
+  border: 1px solid #ddd;
+}
+
+/* Empty state hint */
+.ap-empty-hint {
+  color: #888;
+  margin-bottom: 12px;
+}
+
+.ap-empty-hint-sm {
+  color: #aaa;
+  font-size: 13px;
+  margin: 4px 0 8px;
+}
+
+/* Buttons */
+.ap-btn-primary {
+  padding: 10px 22px;
+  background-color: #1a1a1a;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 600;
+  font-family: inherit;
+}
+
+.ap-btn-primary:hover {
+  background-color: #333;
+}
+
+.ap-btn-secondary {
+  padding: 7px 14px;
+  border: 1px solid #999;
+  background-color: #fff;
+  color: #333;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 13px;
+  margin-top: 4px;
+  font-family: inherit;
+}
+
+.ap-btn-secondary:hover {
+  background-color: #f5f5f5;
+}
+
+.ap-btn-remove {
+  padding: 5px 10px;
+  border: 1px solid #e57373;
+  background-color: transparent;
+  color: #e57373;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 13px;
+  font-family: inherit;
+}
+
+.ap-btn-remove:hover {
+  background-color: #fff5f5;
+}
+
+/* Form footer */
+.ap-form-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 8px;
+}
