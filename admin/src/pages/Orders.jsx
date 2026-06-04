@@ -28,7 +28,7 @@ export default function Orders() {
   }, []);
 
   const filteredOrders = orders.filter((o) => {
-    const matchesSearch = o._id.toLowerCase().includes(search.toLowerCase());
+    const matchesSearch = o._orderNumber.toLowerCase().includes(search.toLowerCase());
     const matchesStatus = statusFilter === "All" ? true : o.orderStatus === statusFilter;
     return matchesSearch && matchesStatus;
   });
@@ -96,7 +96,7 @@ export default function Orders() {
               <div className="order-card__header">
                 <div className="order-card__id-row">
                   <div className="order-card__id-block">
-                    <span className="order-card__id">Order #{order._id.slice(-6).toUpperCase()}</span>
+                    <span className="order-card__id">Order #{order.orderNumber}</span>
                     <div className="order-card__date">
                       {new Date(order.createdAt).toLocaleDateString("en-IN", {
                         day: "2-digit",

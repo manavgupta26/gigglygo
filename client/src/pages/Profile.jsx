@@ -115,7 +115,7 @@ export default function Profile() {
             orders.map((order) => (
               <div key={order._id} className="order-card">
                 <div className="order-top">
-                  <span className="order-id">#{order._id}</span>
+                  <span className="order-id">#{order.orderNumber}</span>
                   <span className="order-amount">₹{order.totalAmount}</span>
                 </div>
                 <div className="order-meta">

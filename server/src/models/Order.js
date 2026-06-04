@@ -1,7 +1,11 @@
 const mongoose = require("mongoose");
-
+const Counter = require("./Counter");
 const orderSchema = new mongoose.Schema(
   {
+    orderNumber: {
+      type: String,
+      unique: true,
+    },
     user: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
@@ -89,5 +93,23 @@ const orderSchema = new mongoose.Schema(
     timestamps: true,
   }
 );
+
+orderSchema.pre("save", async function (next) {
+  if (!this.isNew) return next();
+
+  const counter =
+    await Counter.findOneAndUpdate(
+      { name: "orders" },
+      { $inc: { sequence: 1 } },
+      {
+        new: true,
+        upsert: true,
+      }
+    );
+
+  this.orderNumber = `GG${counter.sequence}`;
+
+  next();
+});
 
 module.exports = mongoose.model("Order", orderSchema);
